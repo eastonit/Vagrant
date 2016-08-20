@@ -1,0 +1,2 @@
+# Vagrant
+All vagrant projects
