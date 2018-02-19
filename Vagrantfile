@@ -5,25 +5,35 @@
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
+
+# The most common configuration options are documented and commented below.
+# For a complete reference, please see the online documentation at
+# https://docs.vagrantup.com.
+
+# Every Vagrant development environment requires a box. You can search for
+# boxes at https://atlas.hashicorp.com/search.
+
 Vagrant.configure("2") do |config|
-  # The most common configuration options are documented and commented below.
-  # For a complete reference, please see the online documentation at
-  # https://docs.vagrantup.com.
+  config.vm.box = "pbarriscale/centos7-gui"
 
-  # Every Vagrant development environment requires a box. You can search for
-  # boxes at https://atlas.hashicorp.com/search.
-  # config.vm.box = "ubuntu/trusty64"
-  # config.vm.provision :shell, path: "bootstrap.sh"
+###############################    
+#### Configure Virtual Box ####
+###############################
 
-  config.vm.define "ansible" do |ansible|
-    ansible.vm.box = "ubuntu/trusty64"
-    ansible.vm.provision :shell, path: "bootstrap.sh"
-    ansible.vm.network "private_network", type: "dhcp"
+  config.vm.provider "virtualbox" do |v|
+    v.gui = true
+
+##################################    
+#### Run the bootstrap script ####
+##################################
+
+  config.vm.provision :shell, path: "bootstrap.sh"
   end
-    config.vm.define "test1" do |test1|
-    test1.vm.box = "ubuntu/trusty64"
-    test1.vm.network "private_network", type: "dhcp"
-  end
+
+  # config.vm.define "ansible" do |ansible|
+  #   ansible.vm.box = "ubuntu/trusty64"
+  #   ansible.vm.provision :shell, path: "bootstrap.sh"
+  #   ansible.vm.network "private_network", type: "dhcp"
     
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
